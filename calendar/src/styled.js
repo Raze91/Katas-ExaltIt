@@ -12,6 +12,7 @@ export const Row = styled.div`
     border-top: 1px solid black;
     position: relative;
     display: flex;
+    gap: 5px;
 `;
 
 export const RowHour = styled.p`
@@ -26,11 +27,10 @@ export const Event = styled.div`
     flex: 1;
     background-color: #039BE5;
     color: white;
-    margin-right: 5px;
     border-radius: 5px;
     padding: 10px;
     z-index: 1;
 
-    height: ${props => props.duration}px;
+    height: calc(${props => props.duration}px);
     margin-top: ${props => props.startMinutes}px;
 `;
