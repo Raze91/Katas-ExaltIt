@@ -3,9 +3,11 @@ import { calendarHours } from "../../constants";
 
 import moment from "moment";
 import inputs from "../../input.json";
+import { useEffect, useState } from "react";
 
 export default function GridCalendar() {
     const sortedInputs = inputs.sort(compare);
+    const [finalInputs, setFinalInputs] = useState([]);
 
     function compare(a, b) {
         if (a.start < b.start) {
@@ -19,91 +21,99 @@ export default function GridCalendar() {
         }
     }
 
-    function insertInputs(rowHour) {
+    useEffect(() => {
+        let array = [];
+        let finalArray = [];
+        sortedInputs.forEach((item, index) => {
+            array.push(item);
+
+            if (
+                sortedInputs[index + 1] &&
+                sortedInputs[index + 1].start.split(":")[0] !==
+                    array[0].start.split(":")[0]
+            ) {
+                finalArray.push(array);
+                array = [];
+            }
+        });
+        setFinalInputs(finalArray);
+    }, []);
+
+    function insertInputs() {
         let column = 2;
 
-        return sortedInputs.map((item, index) => {
-            let startHour = item.start.split(":")[0];
-            let endTime = moment(item.start, "HH:mm")
-                .add(item.duration, "minutes")
-                .format("HH:mm");
-
-            if (index > 0) {
-                let prevItem = sortedInputs[index - 1];
-                let prevItemStart = prevItem.start;
-                let prevItemEnd = moment(prevItem.start, "HH:mm")
-                    .add(prevItem.duration, "minutes")
+        return finalInputs.map((item, index) => {
+            return item.map((subItem, key) => {
+                let endHour = moment(subItem.start, "HH:mm")
+                    .add(subItem.duration, "minutes")
                     .format("HH:mm");
 
-                // if (item.start > prevItemStart && item.start < prevItemEnd) {
-                //     column++;
-                // } else {
-                //     column = 2;
-                // }
+                // Checks pour le premier event de chaque heure
+                if (key === 0 && index > 0 && subItem === item[key]) {
+                    let prevHourSubItem =
+                        finalInputs[index - 1][
+                            finalInputs[index - 1].length - 1
+                        ];
 
-            //     if (index > 1) {
-            //         let prevPrevItem = sortedInputs[index - 2];
-            //         let prevPrevItemStart = prevPrevItem.start;
-            //         let prevPrevItemEnd = moment(prevPrevItem.start, "HH:mm")
-            //             .add(prevItem.duration, "minutes")
-            //             .format("HH:mm");
+                    // Check le dernier event de l'heure précédente
+                    if (
+                        subItem.start <
+                        moment(prevHourSubItem.start, "HH:mm")
+                            .add(prevHourSubItem.duration, "minutes")
+                            .format("HH:mm")
+                    ) {
+                        column = 3;
+                    } else {
+                        column = 2;
+                    }
+                }
 
-            //         // if (
-            //         //     item.start > prevItemStart &&
-            //         //     item.start < prevItemEnd
-            //         // ) {
-            //         //     column++;
-            //         // } else if (
-            //         //     item.start > prevPrevItemStart &&
-            //         //     item.start < prevPrevItemEnd
-            //         // ) {
-            //         //     column = 4;
-            //         // } else {
-            //         //     column = 2;
-            //         // }
+                // Checks pour tous les events après le premier de chaque heure
+                if (key > 0 && subItem === item[key]) {
+                    // Check l'event précédent dans l'heure actuelle
+                    if (
+                        subItem.start <
+                        moment(item[key - 1].start, "HH:mm")
+                            .add(item[key - 1].duration, "minutes")
+                            .format("HH:mm")
+                    ) {
+                        column = 3;
+                    } else {
+                        column = 2;
+                    }
 
-            //         console.log("Previous previous event : ", prevPrevItem);
-            //         console.log("Previous Event : ", prevItem);
-            //         console.log("Current Event : ", item);
+                    if (key > 1 && subItem === item[key]) {
+                        // Check l'event précédent ainsi que celui d'avant
+                        if (
+                            subItem.start <
+                                moment(item[key - 1].start, "HH:mm")
+                                    .add(item[key - 1].duration, "minutes")
+                                    .format("HH:mm") &&
+                            subItem.start <
+                                moment(item[key - 2].start, "HH:mm")
+                                    .add(item[key - 2].duration, "minutes")
+                                    .format("HH:mm")
+                        ) {
+                            column = 4;
+                        } else {
+                            column = 2;
+                        }
+                    }
+                }
 
-            //         if (
-            //             item.start > prevItemStart &&
-            //             item.start < prevItemEnd &&
-            //             item.start > prevPrevItemEnd
-            //         ) {
-            //             console.log(`est dans l'event précédent`);
-            //             column = 3;
-            //         } else if (
-            //             item.start > prevItemStart &&
-            //             item.start < prevItemEnd &&
-            //             item.start > prevPrevItemStart &&
-            //             item.start < prevPrevItemEnd
-            //         ) {
-            //             column = 4;
-            //         } else {
-            //             column = 4;
-            //         }
-            //     }
-            // }
-
-            // if (index === sortedInputs.length - 1) {
-            //     console.log("last", item);
-            // }
-
-            if (startHour === rowHour) {
                 return (
                     <GridEvent
-                        key={index}
+                        key={key}
                         time={{
-                            start: item.start.replace(":", ""),
-                            end: endTime.replace(":", ""),
+                            start: subItem.start.replace(":", ""),
+                            end: endHour.replace(":", ""),
                         }}
                         column={column}
                     >
-                        {item.start} - {endTime}
+                        {subItem.start} - {endHour}
                     </GridEvent>
                 );
-            }
+            });
         });
     }
 
@@ -117,24 +127,10 @@ export default function GridCalendar() {
         });
     }
 
-    // useEffect(() => {
-    //     calendarHours.forEach((item) => {
-    //         Array.from(Array(60).keys()).forEach((num) => {
-    //             if (num.toString().length === 1) {
-    //                 console.log(item + `0${num}`);
-    //             } else {
-    //                 console.log(item + num);
-    //             }
-    //         });
-    //     });
-    // });
-
     return (
         <GridWrapper>
             {insertTimeSlots()}
-            {calendarHours.map((item, key) => {
-                return insertInputs(item.split(":")[0]);
-            })}
+            {insertInputs()}
         </GridWrapper>
     );
 }
