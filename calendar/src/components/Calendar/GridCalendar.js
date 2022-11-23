@@ -35,6 +35,11 @@ export default function GridCalendar() {
                 finalArray.push(array);
                 array = [];
             }
+
+            if (index === sortedInputs.length - 1) {
+                finalArray.push(array);
+                array = [];
+            }
         });
         setFinalInputs(finalArray);
     }, []);
@@ -83,18 +88,23 @@ export default function GridCalendar() {
                     }
 
                     if (key > 1 && subItem === item[key]) {
-                        // Check l'event précédent ainsi que celui d'avant
+                        // Check les deux events précédent
+
                         if (
-                            subItem.start <
+                            (subItem.start <
                                 moment(item[key - 1].start, "HH:mm")
                                     .add(item[key - 1].duration, "minutes")
                                     .format("HH:mm") &&
+                                subItem.start <
+                                    moment(item[key - 2].start, "HH:mm")
+                                        .add(item[key - 2].duration, "minutes")
+                                        .format("HH:mm")) ||
                             subItem.start <
                                 moment(item[key - 2].start, "HH:mm")
                                     .add(item[key - 2].duration, "minutes")
                                     .format("HH:mm")
                         ) {
-                            column = 4;
+                            column++;
                         } else {
                             column = 2;
                         }
