@@ -1,12 +1,12 @@
 import { Nav } from "./styled";
 
-export default function Navbar() {
+export default function Navbar({ active }) {
     return (
         <Nav>
             <h1>BeerShop 🍻</h1>
             <ul>
                 <li>
-                    <a href="/" className="active">
+                    <a href="/" className={active === "home" ? "active" : ""}>
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 576 512"
@@ -17,7 +17,10 @@ export default function Navbar() {
                     </a>
                 </li>
                 <li>
-                    <a href="/cart">
+                    <a
+                        href="/cart"
+                        className={active === "cart" ? "active" : ""}
+                    >
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 576 512"
