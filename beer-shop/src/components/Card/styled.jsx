@@ -8,6 +8,7 @@ export const CardCtnr = styled.div`
     width: 15em;
     border: 1px solid black;
     border-radius: 6px;
+    background-color: white;
 
     :hover {
         cursor: pointer;

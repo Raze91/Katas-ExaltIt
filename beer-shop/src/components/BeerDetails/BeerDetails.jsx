@@ -2,8 +2,6 @@ import React from "react";
 import { Main, ImgCtnr, DetailsContent, ContentHeader } from "./styled";
 
 const BeerDetails = ({ beer, send }) => {
-    console.log(beer);
-
     return (
         <Main>
             <ImgCtnr>
@@ -28,7 +26,7 @@ const BeerDetails = ({ beer, send }) => {
 
                 <button
                     onClick={() => {
-                        send("ADD_TO_CART", { name: beer.name });
+                        send("ADD_TO_CART", { beer: beer });
                     }}
                 >
                     Add to cart

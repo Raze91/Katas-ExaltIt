@@ -7,6 +7,35 @@ const initialContext = {
     beer: null,
 };
 
+const addItem = (cart, beer) => {
+    let beerToAdd = cart.find((item) => item.name === beer.name);
+
+    beerToAdd
+        ? beerToAdd.amount++
+        : cart.push({
+              image_url: beer.image_url,
+              name: beer.name,
+              amount: 1,
+          });
+
+    return cart;
+};
+
+const changeAmount = (cart, name, amount) => {
+    if (amount > 0) {
+        let item = cart.find((item) => item.name === name);
+        item.amount = Number(amount);
+
+        return cart;
+    } else {
+        return deleteItem(cart, name);
+    }
+};
+
+const deleteItem = (cart, name) => {
+    return cart.filter((item) => item.name !== name);
+};
+
 const HomeMachine = createMachine(
     {
         id: "HomeMachine",
@@ -44,13 +73,10 @@ const HomeMachine = createMachine(
                 on: {
                     ADD_TO_CART: {
                         target: "addedToCart",
-                        // actions: assign((context, event) => ({
-                        //     ...context,
-                        //     cart: [
-                        //         ...context.cart,
-                        //         { name: event.name, quantity: 1 },
-                        //     ],
-                        // })),
+                        actions: assign((context, event) => ({
+                            ...context,
+                            cart: addItem(context.cart, event.beer),
+                        })),
                     },
                     GO_TO_CART: {
                         target: "cart",
@@ -74,6 +100,24 @@ const HomeMachine = createMachine(
                 on: {
                     BACK_TO_IDLE: {
                         target: "idle",
+                    },
+                    CHANGE_AMOUNT: {
+                        target: "cart",
+                        actions: assign((context, event) => ({
+                            ...context,
+                            cart: changeAmount(
+                                context.cart,
+                                event.name,
+                                event.amount
+                            ),
+                        })),
+                    },
+                    DELETE_ITEM: {
+                        target: "cart",
+                        actions: assign((context, event) => ({
+                            ...context,
+                            cart: deleteItem(context.cart, event.name),
+                        })),
                     },
                 },
             },

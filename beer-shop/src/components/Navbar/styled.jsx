@@ -2,10 +2,10 @@ import styled from "styled-components";
 
 export const Nav = styled.nav`
     display: flex;
-    padding: 0 5rem;
+    padding: 0 2em;
     justify-content: space-between;
     align-items: center;
-    background-color: #0c0d08d8;
+    background-color: #131921;
     color: white;
 
     button {

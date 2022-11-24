@@ -5,10 +5,11 @@ import { useMachine } from "@xstate/react";
 import HomeContent from "../../components/HomeContent/HomeContent";
 import BeerDetails from "../../components/BeerDetails/BeerDetails";
 import AddedToCart from "../../components/AddedToCart/AddedToCart";
+import Cart from "../../components/Cart/Cart";
 
 const Home = () => {
     const [state, send] = useMachine(HomeMachine);
-    const { beers, beer } = state.context;
+    const { beers, beer, cart } = state.context;
 
     return (
         <>
@@ -21,7 +22,7 @@ const Home = () => {
                 <BeerDetails beer={beer} send={send} />
             )}
             {state.matches("addedToCart") && <AddedToCart send={send} />}
-            {state.matches("cart") && <h1>Cart</h1>}
+            {state.matches("cart") && <Cart cart={cart} send={send} />}
         </>
     );
 };
