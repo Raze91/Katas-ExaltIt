@@ -6,7 +6,7 @@ const initialContext = {
     cart: [],
     beer: null,
     page: 1,
-    page_limit: 25
+    page_limit: 25,
 };
 
 const addItem = (cart, beer) => {
@@ -15,8 +15,7 @@ const addItem = (cart, beer) => {
     beerToAdd
         ? beerToAdd.amount++
         : cart.push({
-              image_url: beer.image_url,
-              name: beer.name,
+              beer: beer,
               amount: 1,
           });
 
@@ -25,7 +24,7 @@ const addItem = (cart, beer) => {
 
 const changeAmount = (cart, name, amount) => {
     if (amount > 0) {
-        let item = cart.find((item) => item.name === name);
+        let item = cart.find((cartItem) => cartItem.beer.name === name);
         item.amount = Number(amount);
 
         return cart;
@@ -35,7 +34,7 @@ const changeAmount = (cart, name, amount) => {
 };
 
 const deleteItem = (cart, name) => {
-    return cart.filter((item) => item.name !== name);
+    return cart.filter((item) => item.beer.name !== name);
 };
 
 const HomeMachine = createMachine(
@@ -96,7 +95,7 @@ const HomeMachine = createMachine(
             beerDetails: {
                 on: {
                     ADD_TO_CART: {
-                        target: "addedToCart",
+                        target: "beerDetails",
                         actions: assign((context, event) => ({
                             ...context,
                             cart: addItem(context.cart, event.beer),
@@ -117,20 +116,17 @@ const HomeMachine = createMachine(
                     },
                 },
             },
-            addedToCart: {
-                on: {
-                    GO_TO_CART: {
-                        target: "cart",
-                    },
-                    BACK_TO_IDLE: {
-                        target: "idle",
-                    },
-                },
-            },
             cart: {
                 on: {
                     BACK_TO_IDLE: {
                         target: "idle",
+                    },
+                    GO_TO_DETAILS: {
+                        target: "beerDetails",
+                        actions: assign((context, event) => ({
+                            ...context,
+                            beer: event.beer,
+                        })),
                     },
                     CHANGE_AMOUNT: {
                         target: "cart",

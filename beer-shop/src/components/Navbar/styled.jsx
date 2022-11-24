@@ -5,8 +5,10 @@ export const Nav = styled.nav`
     padding: 0 2em;
     justify-content: space-between;
     align-items: center;
-    background-color: #131921;
     color: white;
+    background-color: white;
+    border-bottom: 1px solid #00000010;
+    height: 68px;
 
     button {
         all: unset;
@@ -18,17 +20,16 @@ export const Nav = styled.nav`
 
     ul {
         display: flex;
-        gap: 3rem;
+        gap: 1rem;
         list-style: none;
 
         li {
             button {
                 display: flex;
-                flex-direction: column;
                 align-items: center;
                 gap: 5px;
 
-                color: white;
+                color: #00000090;
                 opacity: 0.5;
                 text-decoration: none;
 
@@ -37,8 +38,8 @@ export const Nav = styled.nav`
                 }
 
                 svg {
-                    fill: white;
-                    width: 1.5rem;
+                    fill: #000000;
+                    width: 0.8rem;
                 }
             }
             button.active {

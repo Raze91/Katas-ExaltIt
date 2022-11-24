@@ -21,14 +21,28 @@ const Cart = ({ cart, send }) => {
                             <React.Fragment key={key}>
                                 <hr />
                                 <CartItem>
-                                    <CartItemImage>
+                                    <CartItemImage
+                                        onClick={() =>
+                                            send("GO_TO_DETAILS", {
+                                                beer: item.beer,
+                                            })
+                                        }
+                                    >
                                         <img
-                                            src={item.image_url}
-                                            alt={item.name}
+                                            src={item.beer.image_url}
+                                            alt={item.beer.name}
                                         />
                                     </CartItemImage>
                                     <CartItemContent>
-                                        <h3>{item.name}</h3>
+                                        <h3
+                                            onClick={() => {
+                                                send("GO_TO_DETAILS", {
+                                                    beer: item.beer,
+                                                });
+                                            }}
+                                        >
+                                            {item.beer.name}
+                                        </h3>
                                         <CartItemManagement>
                                             <p>
                                                 Amount:{" "}
@@ -36,7 +50,8 @@ const Cart = ({ cart, send }) => {
                                                     value={item.amount}
                                                     onChange={(e) =>
                                                         send("CHANGE_AMOUNT", {
-                                                            name: item.name,
+                                                            name: item.beer
+                                                                .name,
                                                             amount: e.target
                                                                 .value,
                                                         })
@@ -56,7 +71,7 @@ const Cart = ({ cart, send }) => {
                                             <button
                                                 onClick={() => {
                                                     send("DELETE_ITEM", {
-                                                        name: item.name,
+                                                        name: item.beer.name,
                                                     });
                                                 }}
                                             >

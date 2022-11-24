@@ -7,10 +7,18 @@ export const PaginationCtnr = styled.div`
 
     button {
         all: unset;
-        text-decoration: underline;
+        transition: all ease-in-out 0.2s;
+        color: #00000090;
 
-        :hover {
+        :hover,
+        :focus {
+            color: #000000;
             cursor: pointer;
+        }
+
+        :disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
         }
     }
 `;
