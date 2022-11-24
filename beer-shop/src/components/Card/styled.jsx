@@ -11,7 +11,6 @@ export const CardCtnr = styled.div`
     background-color: white;
 
     :hover {
-        cursor: pointer;
         box-shadow: 0px 0px 15px 2px black;
         transition: 300ms;
     }
@@ -41,5 +40,27 @@ export const CardContent = styled.div`
 
     p {
         font-style: italic;
+    }
+`;
+
+export const CardButtonsCtnr = styled.div`
+    display: flex;
+    justify-content: center;
+    gap: 1em;
+
+    button {
+        display: flex;
+        padding: 1em;
+        align-self: center;
+        width: fit-content;
+
+        :hover {
+            cursor: pointer;
+        }
+
+        svg {
+            width: 2em;
+            height: 2em;
+        }
     }
 `;

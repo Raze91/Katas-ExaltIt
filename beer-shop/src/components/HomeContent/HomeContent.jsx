@@ -2,14 +2,14 @@ import React from "react";
 import { CardsCtnr, Main } from "./styled";
 import Card from "../Card/Card";
 
-const HomeContent = ({beers, send}) => {
+const HomeContent = ({ beers, cart, send }) => {
     return (
         <Main>
             <h1>Welcome to BeerShop !</h1>
 
             <CardsCtnr>
                 {beers?.map((beer, key) => (
-                    <Card key={key} item={beer} send={send} />
+                    <Card key={key} item={beer} cart={cart} send={send} />
                 ))}
             </CardsCtnr>
         </Main>

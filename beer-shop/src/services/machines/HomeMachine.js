@@ -64,6 +64,20 @@ const HomeMachine = createMachine(
                             beer: event.beer,
                         })),
                     },
+                    ADD_TO_CART: {
+                        target: "idle",
+                        actions: assign((context, event) => ({
+                            ...context,
+                            cart: addItem(context.cart, event.beer),
+                        })),
+                    },
+                    DELETE_CART_ITEM: {
+                        target: "idle",
+                        actions: assign((context, event) => ({
+                            ...context,
+                            cart: deleteItem(context.cart, event.name),
+                        })),
+                    },
                     GO_TO_CART: {
                         target: "cart",
                     },
@@ -76,6 +90,13 @@ const HomeMachine = createMachine(
                         actions: assign((context, event) => ({
                             ...context,
                             cart: addItem(context.cart, event.beer),
+                        })),
+                    },
+                    DELETE_CART_ITEM: {
+                        target: "beerDetails",
+                        actions: assign((context, event) => ({
+                            ...context,
+                            cart: deleteItem(context.cart, event.name),
                         })),
                     },
                     GO_TO_CART: {

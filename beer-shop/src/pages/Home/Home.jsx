@@ -17,9 +17,9 @@ const Home = () => {
                 <Navbar state={state} send={send} />
             </header>
 
-            {state.matches("idle") && <HomeContent beers={beers} send={send} />}
+            {state.matches("idle") && <HomeContent beers={beers} cart={cart} send={send} />}
             {state.matches("beerDetails") && (
-                <BeerDetails beer={beer} send={send} />
+                <BeerDetails beer={beer} cart={cart} send={send} />
             )}
             {state.matches("addedToCart") && <AddedToCart send={send} />}
             {state.matches("cart") && <Cart cart={cart} send={send} />}

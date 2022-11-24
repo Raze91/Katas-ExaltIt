@@ -3,7 +3,7 @@ import { Nav } from "./styled";
 export default function Navbar({ state, send }) {
     return (
         <Nav>
-            <button>
+            <button onClick={() => send("BACK_TO_IDLE")}>
                 <h1>BeerShop 🍻</h1>
             </button>
             <ul>

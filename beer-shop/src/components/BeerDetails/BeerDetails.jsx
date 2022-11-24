@@ -1,7 +1,7 @@
 import React from "react";
 import { Main, ImgCtnr, DetailsContent, ContentHeader } from "./styled";
 
-const BeerDetails = ({ beer, send }) => {
+const BeerDetails = ({ beer, cart, send }) => {
     return (
         <Main>
             <ImgCtnr>
@@ -24,13 +24,24 @@ const BeerDetails = ({ beer, send }) => {
                     <strong>Brewers tips :</strong> {beer.brewers_tips}
                 </p>
 
-                <button
-                    onClick={() => {
-                        send("ADD_TO_CART", { beer: beer });
-                    }}
-                >
-                    Add to cart
-                </button>
+                {cart.filter((cartItem) => cartItem.name === beer.name)
+                    .length === 0 ? (
+                    <button
+                        onClick={() => {
+                            send("ADD_TO_CART", { beer: beer });
+                        }}
+                    >
+                        Add to cart
+                    </button>
+                ) : (
+                    <button
+                        onClick={() => {
+                            send("DELETE_CART_ITEM", { name: beer.name });
+                        }}
+                    >
+                        Remove from cart
+                    </button>
+                )}
             </DetailsContent>
         </Main>
     );
