@@ -13,7 +13,7 @@ const Home = () => {
     return (
         <>
             <header>
-                <Navbar state={state} send={send} />
+                <Navbar state={state} cart={cart} send={send} />
             </header>
 
             {state.matches("idle") && <HomeContent beers={beers} cart={cart} page={page} page_limit={page_limit} send={send} />}
