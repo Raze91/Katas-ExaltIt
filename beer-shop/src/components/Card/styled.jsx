@@ -10,6 +10,7 @@ export const CardCtnr = styled.div`
     border-radius: 6px;
 
     :hover {
+        cursor: pointer;
         box-shadow: 0px 0px 15px 2px black;
         transition: 300ms;
     }
@@ -32,7 +33,8 @@ export const CardContent = styled.div`
     padding: 1em 0;
     gap: 1em;
 
-    h2, p {
+    h2,
+    p {
         margin: 0;
     }
 

@@ -8,6 +8,14 @@ export const Nav = styled.nav`
     background-color: #0c0d08d8;
     color: white;
 
+    a {
+        all: unset;
+
+        :hover {
+            cursor: pointer;
+        }
+    }
+
     ul {
         display: flex;
         gap: 3rem;

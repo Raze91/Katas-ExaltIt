@@ -4,6 +4,7 @@ import { getBeers } from "../api/Beers";
 const initialContext = {
     beers: [],
     cart: [],
+    beer: null,
 };
 
 const HomeMachine = createMachine(
@@ -25,7 +26,38 @@ const HomeMachine = createMachine(
                     onError: {},
                 },
             },
-            idle: {},
+            idle: {
+                on: {
+                    GO_DETAILS: {
+                        target: "beerDetails",
+                        actions: assign((context, event) => ({
+                            ...context,
+                            beer: event.beer,
+                        })),
+                    },
+                },
+            },
+            beerDetails: {
+                on: {
+                    ADD_TO_CART: {
+                        target: "addedToCart",
+                        actions: assign((context, event) => ({
+                            ...context,
+                            cart: [
+                                ...context.cart,
+                                { name: event.name, quantity: 1 },
+                            ],
+                        })),
+                    },
+                },
+            },
+            addedToCart: {
+                on: {
+                    BACK_TO_IDLE: {
+                        target: "idle",
+                    },
+                },
+            },
         },
     },
     {

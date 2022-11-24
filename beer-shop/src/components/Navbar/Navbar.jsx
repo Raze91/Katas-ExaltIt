@@ -3,7 +3,9 @@ import { Nav } from "./styled";
 export default function Navbar({ active }) {
     return (
         <Nav>
-            <h1>BeerShop 🍻</h1>
+            <a href="/">
+                <h1>BeerShop 🍻</h1>
+            </a>
             <ul>
                 <li>
                     <a href="/" className={active === "home" ? "active" : ""}>

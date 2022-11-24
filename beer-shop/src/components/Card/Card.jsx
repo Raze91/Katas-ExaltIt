@@ -2,9 +2,13 @@ import React from "react";
 
 import { CardContent, CardCtnr, CardImgCtnr } from "./styled";
 
-const Card = ({ item }) => {
+const Card = ({ item, send }) => {
     return (
-        <CardCtnr>
+        <CardCtnr
+            onClick={() => {
+                send("GO_DETAILS", { beer: item });
+            }}
+        >
             <CardImgCtnr>
                 <img src={item.image_url} alt={item.name} />
             </CardImgCtnr>
