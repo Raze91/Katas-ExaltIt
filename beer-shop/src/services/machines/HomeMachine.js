@@ -5,6 +5,7 @@ const initialContext = {
     beers: [],
     cart: [],
     beer: null,
+    page: 1,
 };
 
 const addItem = (cart, beer) => {
@@ -78,6 +79,14 @@ const HomeMachine = createMachine(
                             cart: deleteItem(context.cart, event.name),
                         })),
                     },
+                    CHANGE_PAGE: {
+                        target: "idle",
+                        actions: assign((context, event) => ({
+                            ...context,
+                            beers: event.beers,
+                            page: event.value,
+                        })),
+                    },
                     GO_TO_CART: {
                         target: "cart",
                     },
@@ -146,7 +155,7 @@ const HomeMachine = createMachine(
     },
     {
         services: {
-            getBeers: () => getBeers(),
+            getBeers: (context) => getBeers(context.page),
         },
     }
 );

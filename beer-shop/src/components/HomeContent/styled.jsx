@@ -6,7 +6,6 @@ export const Main = styled.main`
 
     h1 {
         margin: 0;
-        padding-bottom: 1em;
     }
 `;
 
@@ -15,4 +14,20 @@ export const CardsCtnr = styled.section`
     flex-wrap: wrap;
     gap: 3em;
     justify-content: center;
+    padding: 1em 0 2em 0;
+`;
+
+export const PaginationCtnr = styled.div`
+    display: flex;
+    justify-content: center;
+    gap: 0.5em;
+
+    button {
+        all: unset;
+        text-decoration: underline;
+
+        :hover {
+            cursor: pointer;
+        }
+    }
 `;

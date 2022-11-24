@@ -10,8 +10,6 @@ import {
 } from "./styled";
 
 const Cart = ({ cart, send }) => {
-    console.log(cart);
-
     return (
         <Main>
             {cart.length > 0 ? (
