@@ -3,7 +3,7 @@ import { getBeers } from "../api/Beers";
 
 const initialContext = {
     beers: [],
-    cart: [],
+    cart: JSON.parse(localStorage.getItem("beershop-cart")) || [],
     beer: null,
     page: 1,
     page_limit: 25,
@@ -19,6 +19,7 @@ const addItem = (cart, beer) => {
               amount: 1,
           });
 
+    localStorage.setItem("beershop-cart", JSON.stringify(cart));
     return cart;
 };
 
@@ -27,6 +28,7 @@ const changeAmount = (cart, name, amount) => {
         let item = cart.find((cartItem) => cartItem.beer.name === name);
         item.amount = Number(amount);
 
+        localStorage.setItem("beershop-cart", JSON.stringify(cart));
         return cart;
     } else {
         return deleteItem(cart, name);
@@ -34,7 +36,10 @@ const changeAmount = (cart, name, amount) => {
 };
 
 const deleteItem = (cart, name) => {
-    return cart.filter((item) => item.beer.name !== name);
+    let filteredCart = cart.filter((item) => item.beer.name !== name);
+
+    localStorage.setItem("beershop-cart", JSON.stringify(filteredCart));
+    return filteredCart;
 };
 
 const HomeMachine = createMachine(
