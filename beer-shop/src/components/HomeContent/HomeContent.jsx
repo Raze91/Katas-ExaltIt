@@ -2,10 +2,11 @@ import React from "react";
 import { CardsCtnr, Main, PaginationCtnr } from "./styled";
 import Card from "../Card/Card";
 import { getBeers } from "../../services/api/Beers";
+import Pagination from "../Pagination/Pagination";
 
-const HomeContent = ({ beers, cart, page, send }) => {
+const HomeContent = ({ beers, cart, page, page_limit, send }) => {
     const changePage = (newPage) => {
-        getBeers(newPage).then((response) => {
+        getBeers(newPage, page_limit).then((response) => {
             send("CHANGE_PAGE", { value: newPage, beers: response });
         });
     };
@@ -14,23 +15,12 @@ const HomeContent = ({ beers, cart, page, send }) => {
         <Main>
             <h1>Welcome to BeerShop !</h1>
 
-            <PaginationCtnr>
-                {[...Array(11).keys()].map((item, key) => (
-                    <React.Fragment key={key}>
-                        {key > 0 && (
-                            <>
-                                {page === key ? (
-                                    <p>{item}</p>
-                                ) : (
-                                    <button onClick={() => changePage(item)}>
-                                        {item}
-                                    </button>
-                                )}
-                            </>
-                        )}
-                    </React.Fragment>
-                ))}
-            </PaginationCtnr>
+            <Pagination
+                changePage={changePage}
+                beers={beers}
+                page={page}
+                page_limit={page_limit}
+            />
 
             <CardsCtnr>
                 {beers?.map((beer, key) => (
@@ -38,23 +28,12 @@ const HomeContent = ({ beers, cart, page, send }) => {
                 ))}
             </CardsCtnr>
 
-            <PaginationCtnr>
-                {[...Array(11).keys()].map((item, key) => (
-                    <React.Fragment key={key}>
-                        {key > 0 && (
-                            <>
-                                {page === key ? (
-                                    <p>{item}</p>
-                                ) : (
-                                    <button onClick={() => changePage(item)}>
-                                        {item}
-                                    </button>
-                                )}
-                            </>
-                        )}
-                    </React.Fragment>
-                ))}
-            </PaginationCtnr>
+            <Pagination
+                changePage={changePage}
+                beers={beers}
+                page={page}
+                page_limit={page_limit}
+            />
         </Main>
     );
 };

@@ -6,6 +6,7 @@ const initialContext = {
     cart: [],
     beer: null,
     page: 1,
+    page_limit: 25
 };
 
 const addItem = (cart, beer) => {
@@ -155,7 +156,7 @@ const HomeMachine = createMachine(
     },
     {
         services: {
-            getBeers: (context) => getBeers(context.page),
+            getBeers: (context) => getBeers(context.page, context.page_limit),
         },
     }
 );

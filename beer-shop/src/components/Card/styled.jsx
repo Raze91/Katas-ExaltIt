@@ -37,10 +37,6 @@ export const CardContent = styled.div`
     p {
         margin: 0;
     }
-
-    p {
-        font-style: italic;
-    }
 `;
 
 export const CardButtonsCtnr = styled.div`

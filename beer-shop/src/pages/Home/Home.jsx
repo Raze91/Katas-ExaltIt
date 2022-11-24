@@ -9,7 +9,7 @@ import Cart from "../../components/Cart/Cart";
 
 const Home = () => {
     const [state, send] = useMachine(HomeMachine);
-    const { beers, beer, cart, page } = state.context;
+    const { beers, beer, cart, page, page_limit } = state.context;
 
     return (
         <>
@@ -17,7 +17,7 @@ const Home = () => {
                 <Navbar state={state} send={send} />
             </header>
 
-            {state.matches("idle") && <HomeContent beers={beers} cart={cart} page={page} send={send} />}
+            {state.matches("idle") && <HomeContent beers={beers} cart={cart} page={page} page_limit={page_limit} send={send} />}
             {state.matches("beerDetails") && (
                 <BeerDetails beer={beer} cart={cart} send={send} />
             )}
