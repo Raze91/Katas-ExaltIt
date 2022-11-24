@@ -28,12 +28,15 @@ const HomeMachine = createMachine(
             },
             idle: {
                 on: {
-                    GO_DETAILS: {
+                    GO_TO_DETAILS: {
                         target: "beerDetails",
                         actions: assign((context, event) => ({
                             ...context,
                             beer: event.beer,
                         })),
+                    },
+                    GO_TO_CART: {
+                        target: "cart",
                     },
                 },
             },
@@ -41,17 +44,33 @@ const HomeMachine = createMachine(
                 on: {
                     ADD_TO_CART: {
                         target: "addedToCart",
-                        actions: assign((context, event) => ({
-                            ...context,
-                            cart: [
-                                ...context.cart,
-                                { name: event.name, quantity: 1 },
-                            ],
-                        })),
+                        // actions: assign((context, event) => ({
+                        //     ...context,
+                        //     cart: [
+                        //         ...context.cart,
+                        //         { name: event.name, quantity: 1 },
+                        //     ],
+                        // })),
+                    },
+                    GO_TO_CART: {
+                        target: "cart",
+                    },
+                    BACK_TO_IDLE: {
+                        target: "idle",
                     },
                 },
             },
             addedToCart: {
+                on: {
+                    GO_TO_CART: {
+                        target: "cart",
+                    },
+                    BACK_TO_IDLE: {
+                        target: "idle",
+                    },
+                },
+            },
+            cart: {
                 on: {
                     BACK_TO_IDLE: {
                         target: "idle",

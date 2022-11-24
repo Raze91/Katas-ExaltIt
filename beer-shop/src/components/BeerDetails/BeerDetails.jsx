@@ -1,7 +1,7 @@
 import React from "react";
 import { Main, ImgCtnr, DetailsContent, ContentHeader } from "./styled";
 
-const BeerDetails = ({ beer }) => {
+const BeerDetails = ({ beer, send }) => {
     console.log(beer);
 
     return (
@@ -26,7 +26,13 @@ const BeerDetails = ({ beer }) => {
                     <strong>Brewers tips :</strong> {beer.brewers_tips}
                 </p>
 
-                <button>Add to cart</button>
+                <button
+                    onClick={() => {
+                        send("ADD_TO_CART", { name: beer.name });
+                    }}
+                >
+                    Add to cart
+                </button>
             </DetailsContent>
         </Main>
     );

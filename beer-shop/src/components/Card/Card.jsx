@@ -6,7 +6,7 @@ const Card = ({ item, send }) => {
     return (
         <CardCtnr
             onClick={() => {
-                send("GO_DETAILS", { beer: item });
+                send("GO_TO_DETAILS", { beer: item });
             }}
         >
             <CardImgCtnr>

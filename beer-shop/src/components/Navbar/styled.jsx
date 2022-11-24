@@ -8,7 +8,7 @@ export const Nav = styled.nav`
     background-color: #0c0d08d8;
     color: white;
 
-    a {
+    button {
         all: unset;
 
         :hover {
@@ -22,7 +22,7 @@ export const Nav = styled.nav`
         list-style: none;
 
         li {
-            a {
+            button {
                 display: flex;
                 flex-direction: column;
                 align-items: center;
@@ -41,7 +41,7 @@ export const Nav = styled.nav`
                     width: 1.5rem;
                 }
             }
-            a.active {
+            button.active {
                 opacity: 1;
             }
         }
