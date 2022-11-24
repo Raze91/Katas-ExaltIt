@@ -1,5 +1,5 @@
 import React from "react";
-import { CardsCtnr, Main, PaginationCtnr } from "./styled";
+import { CardsCtnr, Main } from "./styled";
 import Card from "../Card/Card";
 import { getBeers } from "../../services/api/Beers";
 import Pagination from "../Pagination/Pagination";
