@@ -50,7 +50,12 @@ const Card = ({ item, cart, send }) => {
                     </button>
                 )}
             </CardButtonsCtnr>
-            <CardContent>{item.name}</CardContent>
+            <CardContent>
+                <span>
+                    {item.volume.value}&nbsp;{item.volume.unit}
+                </span>
+                <p>{item.name}</p>
+            </CardContent>
         </CardCtnr>
     );
 };

@@ -31,6 +31,12 @@ export const CardContent = styled.div`
     text-align: left;
     word-break: break-all;
     font-size: 1.5rem;
+    p {
+        margin: 0;
+    }
+    span {
+        font-size: 1rem;
+    }
 `;
 
 export const CardButtonsCtnr = styled.div`
