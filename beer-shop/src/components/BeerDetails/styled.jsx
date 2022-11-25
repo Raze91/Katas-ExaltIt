@@ -28,7 +28,7 @@ export const DetailsContent = styled.section`
     flex: 1;
     flex-direction: column;
     overflow-y: scroll;
-    height: calc(100vh - 68px);
+    height: calc(100vh - 68px - (1.5rem * 2));
     padding: 1.5rem;
 
     .tagline {
