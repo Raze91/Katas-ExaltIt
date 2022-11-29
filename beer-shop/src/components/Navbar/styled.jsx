@@ -61,5 +61,5 @@ export const CartPin = styled.div`
     border-radius: 1rem;
     color: #ffffff;
     font-size: 0.8rem;
-    background-color: ${props => props.empty ? 'red' : 'green'};
+    background-color: ${(props) => !props.empty && "green"};
 `;
